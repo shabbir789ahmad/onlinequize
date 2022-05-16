@@ -1,53 +1,81 @@
 @extends('admin.master')
+
 @section('content')
 
 
-  <div class="container-fluid" >
-    
-      <div class="row mt-5 mb-5">
-        <div class="col-md-4">
-            
-        </div>
-        <div class="col-md-4" >
-              <h5 class="text-center fw-bold mt-5">Log in to your account</h5>
 
-              <hr>
-              
-                     <button class="btn-info shadow p-1 form_text btn-block btn mt-3 py-3"><i class="fab fa-facebook-f"></i> sign in with facebook</button>
-                     <button class="btn-info shadow p-1 form_text btn-block btn mt-3 py-3"><i class="fab fa-twitter"></i> sign in with twitter</button>
-                     <button class=" shadow p-1 form_text btn-block btn mt-3 py-3"><i class="fab fa-google "></i> sign in with google</button>
-
-                     <p class="text-center mt-3">OR</p>
-                   <form action="{{route('vendor.authenticate')}}" method="POST">
-                    @csrf
-                    <div class="form-group text-light mt-3">
-                    
-                       <input type="email" name="vendor_email" class="form-control  py-4 border-secondary shadow" placeholder="Enter your Email">
-                    </div>
-                    <div class="form-group text-light">
-                      
-                       <input type="password" name="password" class="form-control  py-4 border-secondary shadow" placeholder="Enter your Password">
-                    </div>
-
-                    <button class="btn btn-lg btn-block login_button" >Log in</button>
-                   </form>
-                   @if(session()->has('adminerror'))
+<div class="grid">
+ <div class="container">
+      
+@if(session()->has('adminerror'))
             <div class="alert alert-danger">
            <strong>Error!</strong>{{session()->get('adminerror')}}
             </div>
+            @elseif(session()->has('message'))
+            <div class="alert alert-success">
+           <strong>Success!</strong>{{session()->get('message')}}
+            </div>
             @endif
-                   <p class=" mt-3 form_text text-center">FORGOT PASSWORD</p>
-                 <p class="text-center mt-3 form_text">Do not have an account? <a href="#">Sign in</a></p>
 
-              
-        </div>
-        <div class="col-md-4">
-            
-        </div>
-      </div>
+<form method="POST" action="{{route('admin.authenticate') }}">
+      @csrf
+        <div class="title">Login</div>
 
- 
-  </div>
+        <div class="input-box underline">
+          <input  id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocu placeholder="Enter Your Email" >
+          <div class="underline"></div>
+          @error('email')
+            <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+             </span>
+         @enderror
+        </div>
+
+         
+
+        <div class="input-box">
+          <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+          <div class="underline"></div>
+        </div>
+
+         @error('password')
+            <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+            </span>
+         @enderror
+
+        <div class="row mt-4">
+                            <div class="col-md-6 ">
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 ">
+                                 @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="">
+                                        {{ __('Forgot  Password?') }}
+                                    </a>
+                                @endif
+
+                            </div>
+                        </div>
+
+        <div class="input-box button">
+          <input type="submit" name="" value="Continue">
+        </div>
+      </form>
+
+
+
+        
+     
+    </div>
+ </div>
+
 
 @endsection
-

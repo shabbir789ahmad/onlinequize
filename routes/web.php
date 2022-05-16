@@ -3,41 +3,57 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
-use App\Http\Controllers\panel\VendorController;
-use App\Http\Controllers\panel\BrandController;
-use App\Http\Controllers\panel\CategoryController;
-use App\Http\Controllers\panel\SubCategoryController;
-use App\Http\Controllers\panel\ProductController;
+use App\Http\Controllers\Admin\AdminController;
 
+
+use App\Http\Controllers\panel\QuestionController;
+use App\Http\Controllers\panel\QuizController;
+
+
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AjaxGameController;
+use App\Http\Controllers\YoutubeController;
+use App\Http\Controllers\GoogleController;
 
 //websites route
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class,'index']);
+Route::get('/game/show/{id}', [HomeController::class,'startQuiz'])->name('game.show');
 
+//ajax quize route
+Route::get('/get/single/{id}/question', [AjaxGameController::class,'getQuestion']);
+Route::post('/ajax/quiz/mark',[AjaxGameController::class,'mark']);
 
+//get lifeline by watching youtube video
 
+Route::resource('lifeline', YoutubeController::class);
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 //admin route
-Route::group(['prefix'=>'vendor'],function()
+Route::group(['prefix'=>'admin'],function()
 {
-  Route::group(['middleware'=>'vendor.guest'],function()
+  Route::group(['middleware'=>'admin.guest'],function()
   {
-    Route::view('/login','admin.admin_login')->name('vendor.login');
-    Route::post('authenticate',[VendorController::class,'adminLogin'])->name('vendor.authenticate');
+    Route::view('/login','admin.admin_login')->name('admin.login');
+    Route::post('authenticate',[AdminController::class,'adminLogin'])->name('admin.authenticate');
   });
 
   //loggedin route
-  Route::group(['middleware'=>'vendor.auth'],function()
+  Route::group(['middleware'=>'admin.auth'],function()
   {
 
-    Route::post('vendor/logout',[VendorController::class,'logout'])->name('vendor.logout');
-     Route::get('dashboard',[DashboardController::class,'index'])->name('vendor.dashboard');
+    Route::post('admin/logout',[AdminController::class,'logout'])->name('admin.logout');
+     Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
 
+      //icons
+     Route::view('icons','Dashboard.icons')->name('icon');
+   
      //admin route
-      Route::resource('brand', BrandController::class);
+     //question crud controller
+      Route::resource('question', QuestionController::class);
      //categoories
-      Route::resource('category', CategoryController::class);
+      Route::resource('quiz', QuizController::class);
      //sub category route
       Route::resource('sub_category', SubCategoryController::class);
       Route::get('get/subcategory',[SubCategoryController::class,'subCategory'])->name('sub_category.get');

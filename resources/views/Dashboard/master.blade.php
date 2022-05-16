@@ -173,7 +173,7 @@
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="{{asset('img/avatars/avatar.jpg')}}" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+                <img src="{{asset('img/avatars/avatar.jpg')}}" class="avatar img-fluid rounded me-1" alt="Admin name" /> <span class="text-dark">{{Auth::user()->name}}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
@@ -184,10 +184,10 @@
 								<div class="dropdown-divider"></div>
 
 							
-								<a class="dropdown-item" href="{{ route('vendor.logout') }}"
+								<a class="dropdown-item" href="{{ route('admin.logout') }}"
     onclick="event.preventDefault();
       document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-       <form id="logout-form" action="{{ route('vendor.logout') }}" method="POST" class="d-hidden">
+       <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-hidden">
                                         @csrf
                                     </form>
 							</div>

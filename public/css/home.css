@@ -1,0 +1,24 @@
+.label_font_size{
+  font-size: 1.2vw;
+}
+.input_border_color{
+  border:1px solid  #222E3C;
+}
+.table_header{
+  background-color: #222E3C;
+  color: #F5A100;
+}
+.spinner{
+  display: none;
+  position: absolute;
+  top: 46%;
+  width: 4%;
+  height: 3.6rem;
+  left: 32%;
+  z-index: 5;
+  background-color: #09192C;
+
+}
+.user_image{
+  border-radius: 50%;
+}

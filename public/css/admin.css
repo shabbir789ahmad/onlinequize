@@ -44,3 +44,19 @@
   from {top: 30px; opacity: 1;}
   to {top: 0; opacity: 0;}
 }
+.background_color{
+  background-color: #222E3C;
+  color: #F5A100;
+  font-size: 2vw;
+  font-weight: 700;
+}
+.label_font_size{
+  font-size: 1.2vw;
+}
+.input_border_color{
+  border:1px solid  #222E3C;
+}
+.table_header{
+  background-color: #222E3C;
+  color: #F5A100;
+}

@@ -3,26 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Quize;
+use App\Models\Question;
+use Auth;
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    
     public function index()
     {
-        return view('home');
+        $quizes=Quize::wheredate('start_date',date('Y-m-d'))
+            ->get();
+         
+        return view('home',compact('quizes'));
+
+    }
+
+    function startQuiz($id)
+    {
+        if(Auth::user())
+        {
+
+            $quiz=Quize::where('id',$id)->first();
+             //dd($quiz);
+            return view('gameshow',compact('quiz'));
+           
+        }else
+        {
+
+           return to_route('login')->with('message','Please Login First To play Game');
+        }
+       
     }
 }

@@ -31,4 +31,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'youtube' => [
+        'api_key' => env('API_KEY'),
+        'search_endpoint' => env('SEARCH_ENDPOINT'),
+    ],
+    'google' => [
+        'client_id'     => env('CLIENT_ID'),
+        'client_secret' => env('CLIENT_SECRET'),
+        'redirect'      => 'http://localhost:8000/auth/google/callback',
+    ],
+
+
 ];

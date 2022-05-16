@@ -9,23 +9,25 @@
 		   Pages
 	   </li>
 
-	   <li class="sidebar-item active">
-		   <a class="sidebar-link" href="{{route('vendor.dashboard')}}">
+	   <li class="sidebar-item @if(request()->is('admin/dashboard')) active  @endif">
+		   <a class="sidebar-link "  href="{{route('admin.dashboard')}}">
          <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
        </a>
 	   </li>
-
+    
+    <li class="sidebar-item @if(request()->is('admin/quiz')) active  @endif">
+		   <a class="sidebar-link" href="{{route('quiz.index')}}">
+              <i class="align-middle me-2" data-feather="film"></i> <span class="align-middle">Create Quiz</span>
+            </a>
+		</li>
 		<li class="sidebar-item">
-		   <a class="sidebar-link" href="{{route('brand.index')}}">
-          <i class="align-middle" data-feather="user"></i> <span class="align-middle">Brand</span>
+		   <a class="sidebar-link" href="{{route('question.index')}}">
+		   	
+         <i class="align-middle me-2" data-feather="copy"></i> <span class="align-middle">Question Bank</span>
        </a>
 		</li>
     
-    <li class="sidebar-item">
-		   <a class="sidebar-link" href="{{route('category.index')}}">
-             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Category</span>
-            </a>
-		</li>
+    
 
     <li class="sidebar-item">
 		   <a class="sidebar-link" href="{{route('sub_category.index')}}">
@@ -82,7 +84,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="icons-feather.html">
+						<a class="sidebar-link" href="{{Route('icon')}}">
               <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
             </a>
 					</li>

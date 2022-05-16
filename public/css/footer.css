@@ -1,0 +1,140 @@
+@media (min-width: 800px)
+{
+  .footer_intro {
+	font-family: Helvetica,Lato, sans-serif;;
+	
+}
+.footer_intro h5,.app h5{
+	font-size: 1.5vw;
+	font-family: Helvetica,Lato, sans-serif;;
+	font-weight: 700;
+	color: #E86209;
+	margin-top: 10%;
+}
+.footer_intro h5 span{
+	color: #E86209;
+}
+.footer_intro p,.app p{
+  font-size: 1vw;
+  color: #fff;
+}
+.app p{
+  font-size: 1.4vw;
+  font-weight: 600;
+}
+.social_icon i{
+	border-radius: 50%;
+	background-color: #E86209;
+	padding: 15px 15px;
+	color: #ffffff;
+}
+.social_icon .f{
+
+	padding: 15px 17px;
+}
+.footer_list a{
+	font-size: 1vw;
+	font-weight:600;
+	color: #fff;
+	text-decoration: none;
+}	
+}
+
+
+
+
+@media (max-width: 770px)
+{
+  .footer_intro {
+	font-family: Helvetica,Lato, sans-serif;;
+	
+}
+.footer_intro h5{
+	font-size: 3vw;
+	font-family: Helvetica,Lato, sans-serif;;
+	font-weight: 700;
+	color: #E86209;
+	
+}
+.footer_intro h5 span{
+	color: #E86209;
+}
+.footer_intro p{
+  font-size: 3vw;
+  color: #fff;
+}
+.social_icon i{
+	border-radius: 50%;
+	background-color: #E86209;
+	padding: 15px 15px;
+	color: #ffffff;
+}
+.social_icon .f{
+
+	padding: 15px 17px;
+}
+
+.footer_list a{
+	display: flex;
+	font-size: 3vw;
+	font-weight:600;
+	color: #212529;
+	text-decoration: none;
+}
+.footer_list i{
+	border-radius: 50%;
+	background-color: #30E3CA;
+	padding: 10px 10px;
+	color: #ffffff;
+	margin-right: 2%;
+	margin-top: 15;
+}	
+}
+
+
+
+
+@media (max-width: 770px)
+{
+  .footer_intro {
+	font-family: Helvetica,Lato, sans-serif;;
+	
+}
+.footer_intro h5{
+	font-size: 5vw;
+	font-family: Helvetica,Lato, sans-serif;;
+	font-weight: 700;
+	color: #E86209;
+}
+.footer_intro h5 span{
+	color: #fff;
+}
+.footer_intro p{
+  font-size: 4vw;
+  color: #fff;
+}
+.social_icon i{
+	border-radius: 50%;
+	background-color: #E86209;
+	padding: 15px 15px;
+	color: #ffffff;
+}
+.social_icon .f{
+
+	padding: 15px 17px;
+}
+.footer_list a{
+	font-size: 4vw;
+	font-weight:600;
+	color: #fff;
+	text-decoration: none;
+}
+.footer_list i{
+	border-radius: 50%;
+	background-color: #30E3CA;
+	padding: 10px 10px;
+	color: #ffffff;
+	margin-right: 2%;
+	margin-top: 15;
+}
+}
