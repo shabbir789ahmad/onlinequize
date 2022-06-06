@@ -240,36 +240,7 @@
     </script>
     
     <!-- get subcategory from sub category controller for all select -->
-    <script type="text/javascript">
-    	$('.category_id').change(function(){
-
-    		$.ajax({
-
-             url: '{{ route('sub_category.get') }}',
-            method: "get",
-            data: {
-                _token: '{{ csrf_token() }}', 
-                id: $(this).val(),
-            },
-            success: function (response) {
-              
-              $('.sub_category_id').empty();
-              $('.sub_category_id').append(` <option selected hidden disabled>Select Sub Category</option>`);
-
-              $.each(response,function(index,value){
-               
-                  $('.sub_category_id').append(`
-                  
-                  <option value="${value.id}">${value.sub_category_name}</option>
-              	`);
-              });
-             
-            }
-
-    		});
-
-    	})
-    </script>
+   
 
 <button onclick="myFunction()">Show Snackbar</button>
 

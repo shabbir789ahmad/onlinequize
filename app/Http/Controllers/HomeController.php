@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Quize;
 use App\Models\Question;
 use Auth;
+use Http;
 class HomeController extends Controller
 {
     
@@ -13,10 +14,20 @@ class HomeController extends Controller
     {
         $quizes=Quize::wheredate('start_date',date('Y-m-d'))
             ->get();
-         
+ 
         return view('home',compact('quizes'));
 
     }
+
+   public function allShows()
+    {
+        $quizes=Quize::wheredate('start_date',date('Y-m-d'))
+            ->get();
+       
+        return view('shows',compact('quizes'));
+
+    }
+    
 
     function startQuiz($id)
     {

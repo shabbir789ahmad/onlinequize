@@ -14,14 +14,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AjaxGameController;
 use App\Http\Controllers\YoutubeController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\CreditController;
 
 //websites route
 Route::get('/', [HomeController::class,'index']);
+Route::get('/all/shows', [HomeController::class,'allShows'])->name('all.shows');
 Route::get('/game/show/{id}', [HomeController::class,'startQuiz'])->name('game.show');
 
 //ajax quize route
 Route::get('/get/single/{id}/question', [AjaxGameController::class,'getQuestion']);
 Route::post('/ajax/quiz/mark',[AjaxGameController::class,'mark']);
+
 
 //get lifeline by watching youtube video
 
@@ -29,6 +32,8 @@ Route::resource('lifeline', YoutubeController::class);
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::post('/earn/credits',[CreditController::class,'credit']);
 
 //admin route
 Route::group(['prefix'=>'admin'],function()
@@ -55,10 +60,9 @@ Route::group(['prefix'=>'admin'],function()
      //categoories
       Route::resource('quiz', QuizController::class);
      //sub category route
-      Route::resource('sub_category', SubCategoryController::class);
-      Route::get('get/subcategory',[SubCategoryController::class,'subCategory'])->name('sub_category.get');
-      //sub category route
-      Route::resource('product', ProductController::class);
+
+      
+     
 
 
   });

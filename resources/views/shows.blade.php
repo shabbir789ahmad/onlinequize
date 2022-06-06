@@ -1,39 +1,8 @@
 @extends('master.master')
-@section('content')
-<style type="text/css">
-  header{
-    height: 35rem;
-  }
-  header img{
-    position:  relative;
-    top: 0;
-    left: 0;
 
-  }
-  .contant{
-    position: absolute;
-    left: 8%;
-    right: 0;
-    top: 25%;
-    width: 45%;
-    height: 20rem;
-    background: #E86209;
-    text-align: center;
-  }
-  .contant h2{
-    margin-top: 10%;
-    color: #fff;
-    font-weight: 900;
-    font-size: 5vw;
-  }
-</style>
-<header>
-  <img src="{{asset('/img/photos/tamara-gak-0f4dfrNdSB0-unsplash.jpg')}}" width="100%" height="100%">
-  <div class="contant">
-   <h2>Play And Earn Exciting Prices</h2>
-  </div>
-</header>
-<div class="container-fluid mt-4">
+@section('content')
+
+<div class="container-fluid">
   <div class="heding">
       <h1>All Game Show</h1>
   </div>

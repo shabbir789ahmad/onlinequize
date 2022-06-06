@@ -4,145 +4,268 @@
 <div class="container-fluid mt-3 mb-3" style="display:flex;justify-content: space-between;">
   <div class="heding ">
       <h1>Watch Our Videos</h1>
-       
+       <div id="subCount"></div>
   </div>
   <div class=" " id="block">
   <button id="subscribe" onclick="authenticate().then(loadClient)" class="btn btn-danger btn-block">Subscribe</button>
-</div>
-          </div>
   
+</div>
+
+          </div>
+   
 </div>
 <div class="container-fluid">
-    <div class="row ">
-        @foreach($results->items as $key =>$result)
-        
-        <div class="col-md-3">
-          
-            <div class="card shadow" >
-              <div class="card-body">
-                <img src="{{ $result->snippet->thumbnails->default->url }}" width="100%" height="200rem"> 
-                <h4 class="mt-3">{{ \Illuminate\Support\Str::limit($result->snippet->title, $limit = 50, $end = ' ...') }}</h4>   
-             </div>
-            </div> 
-            @if($loop->first)
-            <input type="text" name="" id="channelId" value="{{$result->snippet->channelId}}">
-            @endif
-        </div>
-    
-        @endforeach
+    <div class="row justify-content-center">
+        <div class="col-6">
+          <?php $i=0; ?>
+          @foreach($results->items as $item)
+          <?php  $i++; ?>
+            <div id="player{{$i}}" data-id="{{$item->id->videoId}}"></div>
+            <p ><span id="current-time{{$i}}"></span> <span id="duration{{$i}}" class="float-end"></span></p>
+          @endforeach   
+
+            </div>
     </div>
+  
 </div>
 
 
+ <script>
+      
+      var tag = document.createElement('script');
 
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  <script src="https://apis.google.com/js/api.js"></script>
-<script>
-  
+      
+      let player1, player2, player3, player4;
+      function onYouTubeIframeAPIReady() {
 
- var id ;
-  function authenticate() {
-    return gapi.auth2
-      .getAuthInstance()
-      .signIn({ scope: "https://www.googleapis.com/auth/youtube.force-ssl" })
-      .then(
-        function() {
-          console.log("Sign-in successful");
-         
-        },
-        function(err) {
-          console.error("Error signing in", err);
+        let id='';
+        let videoId='';
+         id= document.getElementById('player1');
+         videoId=id.getAttribute('data-id');
+         player1= createVideo(id,videoId)
+
+        id= document.getElementById('player2');
+        if(id)
+        {
+
+         videoId=id.getAttribute('data-id');
+         player2= createVideo(id,videoId)
         }
-      );
-  }
+       
+      
+      id= document.getElementById('player3');
+        if(id)
+        {
 
-  
-  function loadClient() {
-    gapi.client.setApiKey("AIzaSyBHzsW_9GJFsc1IPghMJqc0LJfwYfYyQnY");
-    return gapi.client
-      .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-      .then(
-        function() {
-          console.log("GAPI client loaded for API");
-          subscribe();
-        },
-        function(err) {
-          console.error("Error loading GAPI client for API", err);
+         videoId=id.getAttribute('data-id');
+         player3= createVideo(id,videoId)
         }
-      );
-  }
 
-  function subscribe() {
-    var channelId = document.getElementById("channelId").value;
-    return gapi.client.youtube.subscriptions
-      .insert({
-        part: "snippet",
-        resource: {
-          snippet: {
-            resourceId: {
-              kind: "youtube#channel",
-              channelId: channelId
-            }
+        id= document.getElementById('player4');
+        if(id)
+        {
+
+         videoId=id.getAttribute('data-id');
+         player4= createVideo(id,videoId)
+        }
+       
+
+      }
+
+      function createVideo(id,videoId)
+      {
+     
+       return new YT.Player(id, {
+          height: '390',
+          width: '690',
+          videoId: videoId,
+          
+          playerVars: {
+            'playsinline': 1,
+             'autoplay':1,
+             mute:1,
+             disablekb:1,
+          },
+          events: {
+           
+            'onReady': initialize,
+            
           }
-        }
-      })
-      .then(
-        function(response) {
-          // Handle the results here (response.result has the parsed body).
-          console.log("Response", response);
-          id = response.result.id
+        });
+      }
 
-          let result = `
-             Watch 5 videos to get one lifeline
-          `;
-          document.getElementById("block").innerHTML = result;
-        },
-        function(err) {
-          console.error("Execute error", err);
-        }
-      );
-  }
+     
+     
 
-  
+      function initialize()
+      {
+        
+       updateTimerDisplay();
 
-  function unsubscribe(){
-    document.getElementById('result').innerHTML = ''
-    var channelId = document.getElementById('channelId').value
-    return gapi.client.youtube.subscriptions.delete({
-        "id":id
-    })
-        .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
+        
+         if(player2)
+         {
+          updateTimerDisplay2();
+          stopVideo(player2)
+         }
+         if(player3)
+         {
+          updateTimerDisplay3();
+          stopVideo(player3)
+         }
+         if(player4)
+         {
+          updateTimerDisplay4();
+          stopVideo(player4)
+         }
+ 
+         let time_update_interval=0;
+        clearInterval(time_update_interval);
+        time_update_interval = setInterval(function () {
+         updateTimerDisplay();
+         if(player2)
+         {
+          updateTimerDisplay2();
+         }
+         if(player3)
+         {
+          updateTimerDisplay3();
+         }
+         if(player4)
+         {
+          updateTimerDisplay4();
+         }
 
-                let result = `
-          <h3>You are successfully unsubscribed to Channel</h3>
-          <button onclick="subscribe()" class="btn btn-danger">Subscribe</button>
-          `;
-          document.getElementById("result").innerHTML = result;
+        
+         }, 1000)
+      }
+var executed = false;
+function updateTimerDisplay(){
+    
 
-              },
-        function(err) { console.error("Execute error", err); });
-  }
-
-  gapi.load("client:auth2", function() {
+   $('#current-time1').text(formatTime(player1.getCurrentTime() ));
+    $('#duration1').text(formatTime( player1.getDuration() ));
    
+    if(player1.getCurrentTime() > (player1.getDuration()/2))
+    {
+      
+      if(executed == false)
+      {
+        executed = true;
+            credit();
+            stopVideo(player1)
+            player2.playVideo()
+      }
+   
+      
+    }
+}
 
-    window.gapi.client
-        .init({
-          clientId:'649322921404-jd28nq4m1d7bc46loatlr0nv3iahd204.apps.googleusercontent.com',
-          scope: "email",
-          plugin_name:'laravel youtube'
-        })
-  });
+var executed2 = false;
+function updateTimerDisplay2(){
+    
+    $('#current-time2').text(formatTime(player2.getCurrentTime()));
+    $('#duration2').text(formatTime( player2.getDuration() ));
+
+     if(player2.getCurrentTime() > (player2.getDuration()/2))
+    {
+      
+      if(executed2 == false)
+      {
+        executed2 = true;
+            credit();
+            player3.playVideo()
+            stopVideo(player2);
+      }
+   
+      
+    }
+}
+
+var executed3 = false;
+function updateTimerDisplay3(){
+    
+    $('#current-time3').text(formatTime(player3.getCurrentTime()));
+    $('#duration3').text(formatTime( player3.getDuration() ));
+
+    if(player3.getCurrentTime() > (player3.getDuration()/2))
+    {
+      
+      if(executed3 == false)
+      {
+        executed3 = true;
+            credit();
+            player4.playVideo();
+            stopVideo(player3);
+      }
+   
+      
+    }
+}
+
+var executed4 = false;
+function updateTimerDisplay4(){
+    
+    $('#current-time4').text(formatTime(player4.getCurrentTime()));
+    $('#duration4').text(formatTime( player4.getDuration() ));
+
+    if(player4.getCurrentTime() > (player4.getDuration()/2))
+    {
+      
+      if(executed4 == false)
+      {
+        executed4 = true;
+            credit();
+            player1.playVideo();
+            stopVideo(player4);
+      }
+   
+      
+    }
+}
+function formatTime(time){
+    time = Math.round(time);
+
+    var minutes = Math.floor(time / 60),
+    seconds = time - minutes * 60;
+
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    return minutes + ":" + seconds;
+}
+
+      function stopVideo(player) {
+        player.stopVideo();
+      }
+      
+    </script>
 
 
+<script type="text/javascript">
+  function credit()
+  {
 
+    $.ajax({
+       
+        url:'/earn/credits',
+        type:'json',
+        method:'POST',
+        data:{
+
+          "_token": $('#csrf-token')[0].content ,
+        }
+    }).done(function(res)
+    {
+
+   alert(res)
+    });
+
+  }
 </script>
-
-
-
-
 
 
 @endsection

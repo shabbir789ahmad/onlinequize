@@ -8,9 +8,9 @@
 
       <ul class="ul mb-0">
         <li class="li"><a  class="  {{ (request()->is('/')) ? 'active' : '' }}"  href="{{url('/')}}">Home</a></li>
-        <li class="li"><a href="{{url('searchresult')}}"   class="  {{ (request()->is('searchresult')) ? 'active' : '' }}">Buy</a></li>
-        <li class="li"><a href="{{url('searchresult')}}" class="  {{ (request()->is('searchresult')) ? 'active' : '' }}">Rent</a></li>
-        <li class="li"><a href="{{url('agent')}}" class="  {{ (request()->is('agent')) ? 'active' : '' }}">Find Agent</a></li>
+        <li class="li"><a href="{{route('all.shows')}}"   class="  {{ (request()->is('/all/shows')) ? 'active' : '' }}">Shows</a></li>
+        <li class="li"><a href="{{route('lifeline.index')}}" class="  {{ (request()->is('lifeline')) ? 'active' : '' }}">Our Videos</a></li>
+        <li class="li"><a href="{{route('lifeline.index')}}" class="  {{ (request()->is('lifeline')) ? 'active' : '' }}">Earn Money</a></li>
       </ul>
 
       <!-- <button class="btn btn_upload_adds"><i class="fa-solid fa-plusd"></i>Post Adds</button> -->
