@@ -38,7 +38,7 @@ class GetSingleQuestion
                 return $question;
          	}else{
          		
-         		return $quiz='You Are all Cauth Up';
+         		return $quiz='Quiz Over! Thank You For Participation';
          	}
 
          	

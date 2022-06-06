@@ -27,16 +27,15 @@ class AjaxGameController extends Controller
                 $quiz=GetSingleQuestion::singleQuestion($id,$request->qid);
                 if(gettype($quiz)=='string')
                 {
-                 
-                  return response()->json(['answer'=>$answer,'skip'=>$skip,'message'=>$quiz]);
-                
+               
+                 return response()->json(['answer'=>$answer,'skip'=>$skip,'message'=>$quiz]);
                 }else
                 {
-                 
+                   
                  return response()->json(['answer'=>$answer,'skip'=>$skip,'quiz'=>$quiz]);
                 
                 }
-               return response()->json(['answer'=>$answer,'skip'=>$skip,'quiz'=>$quiz]);
+               
             }else
             {
               return response()->json(['answer'=>$answer,'skip'=>$skip,'message'=>'Game Time Over']);
@@ -47,6 +46,11 @@ class AjaxGameController extends Controller
            return response()->json(['answer'=>$answer,'skip'=>$skip,'message'=>'There is Still Time  To Start Show']);
         }
         
+    }
+
+     function response($answer,$skip,$quiz)
+    {
+      return response()->json(['answer'=>$answer,'skip'=>$skip,'quiz'=>$quiz]);
     }
 
     function mark(Request $request)

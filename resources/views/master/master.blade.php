@@ -14,9 +14,64 @@
    <link rel="stylesheet" type="text/css" href="{{asset('css/home.css')}}">
 <!-- scrf token -->
 <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
+
+
+<style type="text/css">
+  #snackbar {
+  visibility: hidden; 
+  width: 25%;
+  height: 10rem;
+  margin-left: -125px; 
+  background-color: #E86209; 
+  color: #fff; 
+  text-align: center; 
+  border-radius: 2px; 
+  padding: 16px; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0%;
+  right: 0%;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50px; 
+}
+
+
+#snackbar.show {
+  visibility: visible; 
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 50px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 50px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 50px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 50px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+</style>
   </head>
   <body>
-<div id="snackbar"></div>
+<div id="snackbar" class="text-center">
+  <img src="{{asset('img/avatars/salary.png')}}" width="15%">
+  <h5 class="mt-1 fw-bold">Congratulations</h5>
+  <p id="text" class="mt-3"></p>
+</div>
+
     {{View::make('master.header')}}
        @yield('content')
     {{View::make('master.footer')}}
@@ -37,13 +92,19 @@
 
 
 <script>
-  function snackbar(res){
- var x = document.getElementById("snackbar");
+ 
+ function myFunction(res) {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+  var text = document.getElementById("text");
+
+  // Add the "show" class to DIV
   x.className = "show";
-  x.innerHTML=res;
-  x.style.backgroundColor ='#182430'
+  text.innerHTML = res;
+
+  // After 3 seconds, remove the show class from DIV
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
- }
+}
 </script>
 
 

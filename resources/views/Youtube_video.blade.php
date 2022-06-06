@@ -261,7 +261,7 @@ function formatTime(time){
     }).done(function(res)
     {
 
-   alert(res)
+   myFunction(res)
     });
 
   }

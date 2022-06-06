@@ -2,7 +2,7 @@
 @section('content')
 <div class="grid">
  <div class="container">
-   <form method="POST" action="{{route('register') }}">
+   <form method="POST" action="{{route('register') }}" enctype="multipart/form-data">
     @csrf
      <div class="title">Register</div>
 
@@ -52,14 +52,23 @@
             </span>
          @enderror
 
+         <div class="input-box">
+          <input id="image" type="file" class="@error('image') is-invalid @enderror" name="image" >
+          <div class="underline"></div>
+        </div>
+
+         @error('image')
+            <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+            </span>
+         @enderror
+
 
 
         <div class="input-box button">
-          <input type="submit" name="" value="Login">
+          <input type="submit" name="" value="Register">
         </div>
-        <label class="form-check-label" >
-            Sign In To Your Account<a href="{{route('login')}}"> Login</a>
-                                    </label>
+        
         
       </form>
 

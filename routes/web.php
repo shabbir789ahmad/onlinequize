@@ -35,6 +35,17 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::post('/earn/credits',[CreditController::class,'credit']);
 
+//auth user route
+Route::group(['middleware'=>'auth'],function()
+{
+  
+  Route::view('user/dashboard','user.dashboard')->name('user.dashboard');
+
+});
+
+
+
+
 //admin route
 Route::group(['prefix'=>'admin'],function()
 {

@@ -1,23 +1,34 @@
 @extends('master.master')
 
 @section('content')
+<style type="text/css">
+  .card_show{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 60%;
+  }
+</style>
+<!-- <div class="container-fluid mt-5 ">
+  
 
-<div class="container-fluid mt-5 ">
+
   <div class="heding">
       <h1>{{ucfirst($quiz['quize_name'])}}</h1>
   </div>
 </div>
-<a href="{{route('lifeline.index')}}" class="btn btn-warning mb-3"> Get LifeLine</a>
+ -->
 <div class="container-fluid  mb-5">
    <div class="spinner-border text-light spinner" role="status">
      <span class="sr-only">Loading...</span>
    </div>
 
     <div class="row ">
-       <div class="col-md-8">
-            <div class="card shadow" >
-              <div class="card-header py-3" style="background-color: #09192C; color: #fff;">
-               Q : <span id="question_name"></span>
+       <div class=" mt-1" style="width: 77%;">
+        <img src="{{asset('img/photos/bg-stage.db045302.jpg')}}" width="100%" height="670rem" >
+            <div class="card shadow card_show" >
+              <div class="card-header py-3" style="background-color: #09192C; color: #fff; height: 10rem;">
+               <h2 id="question_name" class="mt-5 text-center fw-bold"></h2>
                <input type="hidden" id="question_id" >
               </div>
               <div class="card-body " id="game_over_message">
@@ -35,22 +46,25 @@
               </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow" >
-              <div class="card-body">
-                <h4>Question Summary</h4>
+        <div class="  mt-1" style="width:23%">
+            <div class="card shadow" style="background-color: #09192C;" >
+              <div class="card-body text-light text-center">
+               
                   <div class="row">
-                    <div class="col-md-6 p-0">
-                     <div class="bg-success text-center text-dark p-3">
+                    <div class="col-md-12 p-0">
+                     <div class="bg-success text-center text-light p-3">
                        <p class="mb-1 answered_question">0</p>
                        <p>Answered</p>
                      </div>
                     </div>
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-12 mt-2 p-0">
                      <div class="bg-warning text-center text-dark p-3">
                        <p class="mb-1 skiped_question">0</p>
                        <p>Skiped</p>
                      </div>
+                    </div>
+                    <div class="col-md-12 mt-1 p-0">
+                    <img src="{{asset('img/photos/game-show-party-invitation-design-template-38e5ad3b6c10032a661bcdf187d244d8_screen.jpg')}}" width="100%" height="450rem">
                     </div>
              </div>
             </div>
@@ -98,7 +112,7 @@
 
        $('.spinner').css('display','block');
         let skip_question='skip';
-        markQuestion( skip_question)
+        markQuestion(skip_question)
   
 
   },"{{ $quiz->time_per_question * 1000 }}");
@@ -114,6 +128,7 @@
       })
       .done(function(resp)
        {
+         
         $('.answered_question').html(resp.answer);
         $('.skiped_question').html(resp.skip);
 
@@ -121,10 +136,12 @@
         {
           
           $('#game_over_message').html('')
-          $('#game_over_message').html(resp.message)
+          $('#question_name').html(resp.message)
+
            clearInterval(intervalID)
 
         }else if(resp.quiz){
+         
           let res=resp.quiz;
         $('#question_name').html(res.question)
         $('#question_id').val(res.id)

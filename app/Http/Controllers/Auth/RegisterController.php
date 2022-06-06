@@ -8,13 +8,13 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Traits\ImageTrait;
 class RegisterController extends Controller
 {
     
 
     use RegistersUsers;
-
+   use ImageTrait;
     /**
      * Where to redirect users after registration.
      *
@@ -44,6 +44,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image'=>'nullable|image|mimes:jpeg,png,webp|max:100'
         ]);
     }
 
@@ -59,6 +60,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_image'=>$this->image()??null,
         ]);
     }
 }
