@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Quize;
 use App\Models\Question;
+use App\Helpers\LifeLineHelper;
 use Auth;
 use Http;
 class HomeController extends Controller
 {
-    
+    protected $lifeline;
+   function __construct(LifeLineHelper $lifeline)
+   {
+    $this->lifeline=$lifeline;
+   }
+
     public function index()
     {
         $quizes=Quize::wheredate('start_date',date('Y-m-d'))
@@ -31,18 +37,26 @@ class HomeController extends Controller
 
     function startQuiz($id)
     {
+       
+      
         if(Auth::user())
         {
-
-            $quiz=Quize::where('id',$id)->first();
-             //dd($quiz);
-            return view('gameshow',compact('quiz'));
+            $lifeline=$this->lifeline->lifline();
+            if($lifeline)
+            {
+                $quiz=Quize::where('id',$id)->first();
+            }else{
+                $quiz=null;
+            }
+            
+         
+            return view('gameshow',compact('quiz','lifeline'));
            
         }else
         {
 
            return to_route('login')->with('message','Please Login First To play Game');
         }
-       
+      
     }
 }

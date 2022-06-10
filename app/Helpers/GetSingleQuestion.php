@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Models\Question;
+use App\Models\Lifeline;
 use DB,Auth;
 class GetSingleQuestion
 {
@@ -20,18 +21,17 @@ class GetSingleQuestion
 		->where('quize_id',$quize_id)
 		->get();
 
+		$lifeline=self::life();
 		
-    
+       if($lifeline['lifeline'] > 0)
+       {
          if(count($currents )>0)
          {
          	if($question_count > $answer)
          	{
-         		foreach($currents as $curent)
+         	   foreach($currents as $curent)
          	    {
-                $question =Question::with('options')
-			    ->where('quize_id', $quize_id)
-			    ->where('id','!=', $curent->question_id)
-			    ->orderBy('id')->first();
+                   $question =self::question($quize_id,$curent->question_id);
 
          	   }
    
@@ -45,23 +45,31 @@ class GetSingleQuestion
          
          }else
          {
-         	
-          return  $question =Question::with('options')
-			  ->where('quize_id', $quize_id)
-			  ->where('id','!=', $qid)
-			  ->orderBy('id')
-			  ->first();
+             return self::question($quize_id,$qid);
+	  }
 
-			 
-         }
-           
-              
-             
-			   
- 
-			
+       }else
+       {
+          return $quiz='you dont have more Lifeline To Continue';
+       }
 	   
- }
+   }
+
+   static function life()
+    {
+     return Lifeline::where('user_id',Auth::id())->first('lifeline');
+    }
+
+   static function question($quize_id,$qid)
+    {
+
+    return Question::with('options')
+			->where('quize_id', $quize_id)
+			->where('id','!=', $qid)
+			->orderBy(DB::raw('RAND()'))
+			->first();
+    }
+     
 
 }
 ?>

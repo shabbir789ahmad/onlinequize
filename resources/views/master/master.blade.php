@@ -12,6 +12,8 @@
    <link rel="stylesheet" type="text/css" href="{{asset('css/header.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('css/footer.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('css/home.css')}}">
+   <link rel="stylesheet" type="text/css" href="{{asset('css/user.css')}}">
+   <link rel="stylesheet" type="text/css" href="{{asset('css/game.css')}}">
 <!-- scrf token -->
 <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
 

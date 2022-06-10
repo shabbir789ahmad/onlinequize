@@ -15,6 +15,7 @@ use App\Http\Controllers\AjaxGameController;
 use App\Http\Controllers\YoutubeController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\PayoutController;
 
 //websites route
 Route::get('/', [HomeController::class,'index']);
@@ -26,20 +27,28 @@ Route::get('/get/single/{id}/question', [AjaxGameController::class,'getQuestion'
 Route::post('/ajax/quiz/mark',[AjaxGameController::class,'mark']);
 
 
-//get lifeline by watching youtube video
 
-Route::resource('lifeline', YoutubeController::class);
+
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-Route::post('/earn/credits',[CreditController::class,'credit']);
 
 //auth user route
 Route::group(['middleware'=>'auth'],function()
 {
   
-  Route::view('user/dashboard','user.dashboard')->name('user.dashboard');
+  // Route::view('user/dashboard','user.dashboard')->name('user.dashboard');
+  Route::get('payouts',[PayoutController::class,'payout'])->name('payouts');
+
+  //get lifeline by watching youtube video
+  // Route::resource('lifeline', YoutubeController::class);
+ Route::get('earn/money',[YoutubeController::class,'index'])->name('lifeline.index');
+ Route::get('lifeline/create',[YoutubeController::class,'create'])->name('lifeline.create');
+  Route::post('/lifeline/store',[YoutubeController::class,'store']);
+  
+  Route::post('/earn/credits',[CreditController::class,'credit']);
+
 
 });
 

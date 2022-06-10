@@ -1,33 +1,27 @@
 @extends('master.master')
-
 @section('content')
-<style type="text/css">
-  .card_show{
-    position: absolute;
-    top: 30%;
-    left: 10%;
-    width: 60%;
-  }
-</style>
-<!-- <div class="container-fluid mt-5 ">
-  
 
-
-  <div class="heding">
-      <h1>{{ucfirst($quiz['quize_name'])}}</h1>
-  </div>
-</div>
- -->
+<title>Game Show</title>
 <div class="container-fluid  mb-5">
    <div class="spinner-border text-light spinner" role="status">
      <span class="sr-only">Loading...</span>
    </div>
 
     <div class="row ">
-       <div class=" mt-1" style="width: 77%;">
-        <img src="{{asset('img/photos/bg-stage.db045302.jpg')}}" width="100%" height="670rem" >
+       <div class="game_panel mt-1">
+        <img src="{{asset('img/photos/bg-stage.db045302.jpg')}}" class="background_image" >
+        @if($lifeline ==null)
+        <div class="card shadow card_show" >
+              <div class="card-header game_card_header text-center py-3" >
+               <h2  class="mt-5 fw-bold">You Do Not Have Any LifeLine</h2>
+               <a href="{{route('lifeline.create')}}" class="btn btn-danger mt-4">Click here To Get LifeLine</a>
+               
+              </div>
+              
+            </div>
+        @else
             <div class="card shadow card_show" >
-              <div class="card-header py-3" style="background-color: #09192C; color: #fff; height: 10rem;">
+              <div class="card-header game_card_header py-3">
                <h2 id="question_name" class="mt-5 text-center fw-bold"></h2>
                <input type="hidden" id="question_id" >
               </div>
@@ -45,22 +39,35 @@
                 </div>
               </div>
             </div>
+            @endif
         </div>
-        <div class="  mt-1" style="width:23%">
+        <div class="task_panel  mt-1">
             <div class="card shadow" style="background-color: #09192C;" >
               <div class="card-body text-light text-center">
                
                   <div class="row">
-                    <div class="col-md-12 p-0">
+                    <div class="col-md-6 p-0">
                      <div class="bg-success text-center text-light p-3">
                        <p class="mb-1 answered_question">0</p>
                        <p>Answered</p>
                      </div>
                     </div>
-                    <div class="col-md-12 mt-2 p-0">
+                    <div class="col-md-6  p-0">
                      <div class="bg-warning text-center text-dark p-3">
                        <p class="mb-1 skiped_question">0</p>
                        <p>Skiped</p>
+                     </div>
+                    </div>
+                    <div class="col-md-6 mt-2 p-0">
+                     <div class="bg-success text-center text-light p-3">
+                       <p class="mb-1 rightAnswer">0</p>
+                       <p>Right</p>
+                     </div>
+                    </div>
+                    <div class="col-md-6 mt-2  p-0">
+                     <div class="bg-warning text-center text-dark p-3">
+                       <p class="mb-1 wrongAnswer">0</p>
+                       <p>Wrong</p>
                      </div>
                     </div>
                     <div class="col-md-12 mt-1 p-0">
@@ -84,8 +91,8 @@
      let v=$(this).children('div').children('span').find('input').prop('checked',true);
    });
 
-  //get single questionto show on page
-  getQuestion(0);
+  
+  
    
 
   $(document).on('click','.next_question',function(){
@@ -107,21 +114,33 @@
   //run script after some interval to load new question
   //and skip old question
   
+  <?php if($quiz != null){  ?>
+    //get single questionto show on page
+    getQuestion(0);
+   
+  
+  
+  <?php }else{ ?>
+
+   clearInterval(intervalID)
+
+  <?php }?>
+
+
   let intervalID= setInterval(function()
   {
-
-       $('.spinner').css('display','block');
         let skip_question='skip';
         markQuestion(skip_question)
   
-
   },"{{ $quiz->time_per_question * 1000 }}");
+
 
   function getQuestion(question_id)
   {
 
+  
       $.ajax({
-        url:'/get/single/'+ "{{ $quiz->id }}" +'/question',
+        url:'/get/single/'+ "<?php if($quiz !=null) echo $quiz->id ?>" +'/question',
         data:{
           qid:question_id,
         }
@@ -131,6 +150,8 @@
          
         $('.answered_question').html(resp.answer);
         $('.skiped_question').html(resp.skip);
+        $('.rightAnswer').html(resp.right);
+        $('.wrongAnswer').html(resp.wrong);
 
         if(resp.message)
         {
@@ -162,7 +183,8 @@
 
             `);
         });
-
+        
+     
         $('.spinner').css('display','none');
       }
       }).fail(function() {
@@ -177,7 +199,7 @@
 
   function markQuestion(skip_question)
   {
-
+   
      let selected=$('input[name="correct"]:checked').val();
      if(skip_question !=='skip')
      {
@@ -197,6 +219,7 @@
 
      }else
      {
+
        $('.spinner').css('display','block');
         ajaxskipmark(selected='',skip_question)
      }  
@@ -206,6 +229,7 @@
 
   function ajaxskipmark(selected,skip_question)
   {
+   
      $.ajax({
         url:'/ajax/quiz/mark',
         type: 'POST',
@@ -213,14 +237,24 @@
             _token: "{{ csrf_token() }}",
             question_id: $('#question_id').val(),
             option_id: selected,
-            quize_id: "{{ $quiz->id }}",
-            skip: skip_question,
+            skip_question: skip_question,
+            quize_id: "<?php if($quiz !=null) echo $quiz->id ?>"
 
           },
       })
       .done(function(res) {
-
-        getQuestion("{{ $quiz->id }}");
+  
+        if(res.skip >=1 )
+        {
+         
+         clearInterval(intervalID)
+         $('.skip_question').prop('disabled',true)
+        getQuestion("<?php if($quiz !=null) echo $quiz->id ?>");
+        }else{
+          
+          getQuestion("<?php if($quiz !=null) echo $quiz->id ?>");
+        }
+       $('.spinner').css('display','none'); 
         
       })
       .fail(function()

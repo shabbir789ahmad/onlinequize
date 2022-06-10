@@ -11,7 +11,7 @@ class YoutubeHelper {
 
         $part='Snippet';
         $country='pk';
-        $max_result='1';
+        $max_result='2';
         $api_key=Config('services.youtube.api_key');
         $search_endpoint=Config('services.youtube.search_endpoint');
         $type="video";

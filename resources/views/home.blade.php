@@ -55,7 +55,7 @@
     <div class="row ">
         @foreach($quizes as $quiz)
         
-        <div class="col-md-3">
+        <div class="col-md-3 col-6 ">
           <a href="{{route('game.show',['id'=>$quiz['id']])}}" style="text-decoration: none; color: #000;" >
             <div class="card shadow" >
               <div class="card-body">

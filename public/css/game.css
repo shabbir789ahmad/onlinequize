@@ -1,0 +1,77 @@
+.game_panel{
+	width: 77%;
+}
+.task_panel{
+	width: 23%;
+}
+.game_card_header{
+
+	background-color: #09192C; color: #fff; height: 13rem;
+}
+
+.card_show{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 60%;
+  }
+.background_image{
+	width: 100%; height: 43rem;
+}
+
+
+@media (max-width: 600px)
+{
+	.background_image
+	{
+	  width: 100%; height: 30rem;
+    }
+
+	.game_panel{
+	width: 100%;
+}
+.task_panel{
+	width: 100%;
+}
+.game_card_header{
+
+	background-color: #09192C; color: #fff; height: 20rem;
+}
+.card_show{
+    position: absolute;
+    top: 10%;
+    left: 3%;
+    width: 94%;
+  }
+
+}
+
+
+
+
+
+@media (min-width: 601px) and (max-width: 900px)
+{
+	.background_image
+	{
+	  width: 100%; height: 25rem;
+    }
+
+	.game_panel{
+	width: 100%;
+}
+.task_panel{
+	width: 100%;
+}
+.game_card_header{
+
+	background-color: #09192C; color: #fff; height: 13rem;
+}
+.card_show{
+    position: absolute;
+    top: 10%;
+    left: 3%;
+    width: 94%;
+  }
+
+}

@@ -4,7 +4,10 @@
 <div class="container-fluid mt-3 py-3 mb-3" style="display:flex;justify-content: space-between;background: #E86209;">
    
    <div class="heding">
-      <h2 class="fw-bold text-light">Watch Our Videos</h2>
+      <h2 class="fw-bold text-light">Watch Videos </h2>
+  </div>
+  <div class="heding">
+      <h2 class="fw-bold text-light">Total Lifeline: <span class="text-dark" id="lifeline">@if($lifeline) {{$lifeline['lifeline']}} @else 0 @endif</span></h2>
   </div>
    <div class=" " id="block">
      <button id="subscribe" onclick="authenticate().then(loadClient)" class="btn btn-dark btn-block">Subscribe</button>
@@ -14,13 +17,15 @@
 
 <div class="container-fluid">
     <div class="row ">
-        <div class="col-md-8 border">
-            <input type="range" id="progress-bar" value="0" class="slider">
+
+        <div class="col-md-8 ">
+            <input type="range" id="progress-bar" class="slider" value="0">
+
          @foreach($results->items as $item)
          @if($loop->first)
             <div id="player" data-id="{{$item->id->videoId}}"></div>
             <p ><span id="current-time"></span> <span id="duration" class="float-end"></span></p>
-            
+           
      @endif
          @endforeach 
             </div>
@@ -51,7 +56,7 @@
 
 
  <script>
-      
+    
    var tag = document.createElement('script');
    tag.src = "https://www.youtube.com/iframe_api";
    var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -59,7 +64,7 @@
 
       
       let player;
-       let time_update_interval=0;
+      let time_update_interval=0;
       function onYouTubeIframeAPIReady()
        {
          let videoId='';
@@ -77,12 +82,12 @@
             height: '500',
             width: '920',
             videoId: videoId,
-          
+           
             playerVars: 
             {
                'playsinline': 1,
                'autoplay':1,
-               mute:1,
+               'mute':1,
                disablekb:1,
             },
            events: 
@@ -111,7 +116,7 @@
       }
 
     var executed = false;
-     
+    var k=0;
     function updateTimerDisplay()
     {
       $('#current-time')
@@ -129,8 +134,9 @@
         if(time >= (duration-1000))
         {
           
-              credit();
+              allvideosId(k++)
               
+            
         }
       
       }else
@@ -138,13 +144,16 @@
 
         if(time > 60000)
         {
-          
-            credit();
+             // player.stopVideo();
+             allvideosId(k++)
+           
         }
       }
     }
 
-  function updateProgressBar()
+
+
+   function updateProgressBar()
    {
      if(player.getDuration() > 60)
      {
@@ -171,13 +180,13 @@
  </script>
 
   <script type="text/javascript">
-   var k=0;
+   
     function credit()
     {
 
        $.ajax({
        
-          url:'/earn/credits',
+          url:'/lifeline/store',
           type:'json',
           method:'POST',
           data:{
@@ -186,10 +195,14 @@
           }
        }).done(function(res)
        {
-          clearInterval(time_update_interval)
-          myFunction(res)
-          allvideosId(k)
 
+         clearInterval(time_update_interval)
+         myFunction(res.success);
+         let lifeline=res.lifeline;
+         alert(lifeline.lifeline)
+         document.getElementById('lifeline').html=lifeline.lifeline;
+         
+        
        });
     }
   </script>
@@ -197,27 +210,36 @@
 
 @endsection
 @section('script')
+
   <script type="text/javascript">
-      
+     var count=0;  
     $(document).on('click','.more_videos',function()
     {
 
        videoId=$(this).data('id');
        player.loadVideoById(videoId)
-       initialize()
+        initialize()
+    
     });
-
-
-// delete first video id from array
+    
+   // delete first video id from array
     videoIds.shift()
 
     //call this function to automaticaly play videos
     
     function allvideosId(k)
     { 
+        count++;
+
+        if(count===5)
+        {
+           credit(); 
+        }
+        
         player.loadVideoById(videoIds[k])
         initialize()
       
     }
+
   </script>
 @endsection

@@ -35,7 +35,7 @@
 
 
 
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="pages-blank.html">
               <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
             </a>
@@ -73,9 +73,9 @@
 						<a class="sidebar-link" href="{{Route('icon')}}">
               <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
             </a>
-					</li>
+					</li> -->
 
-					<li class="sidebar-header">
+					<!-- <li class="sidebar-header">
 						Plugins & Addons
 					</li>
 
@@ -89,7 +89,7 @@
 						<a class="sidebar-link" href="maps-google.html">
               <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
             </a>
-					</li>
+					</li> -->
 				</ul>
 
 				
