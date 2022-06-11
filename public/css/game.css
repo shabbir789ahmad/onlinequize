@@ -19,27 +19,42 @@
 	width: 100%; height: 43rem;
 }
 
+.steps{
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+  margin-bottom: 1%;
+}
+.steps .step1,.step2,.step3 ,.step4,.step5{
+  width: 100%;
+  height: 2rem;
+  border-right: 1px solid white;
+  background-color: #09192C;
+  color: #fff;
+  text-align: center;
+}
+
 
 @media (max-width: 600px)
 {
 	.background_image
 	{
-	  width: 100%; height: 30rem;
+	  width: 100%; height: 40rem;
     }
 
 	.game_panel{
 	width: 100%;
-}
-.task_panel{
+    }
+   .task_panel{
 	width: 100%;
-}
-.game_card_header{
+    }
+   .game_card_header{
 
-	background-color: #09192C; color: #fff; height: 20rem;
-}
-.card_show{
+	height: 10rem;
+    }
+   .card_show{
     position: absolute;
-    top: 10%;
+    top: 20%;
     left: 3%;
     width: 94%;
   }

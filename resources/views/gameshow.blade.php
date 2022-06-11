@@ -35,7 +35,7 @@
                 </div>
                 <div class="button mt-5 " style="display: flex; justify-content: center;">
                   <button class="btn btn-warning m-2 btn-lg next_question">Mark And Next</button>
-                  <button class="btn btn-success m-2 p-2 btn-lg skip_question">Skip Question</button>
+                  <button class="btn btn-success m-2 p-2 btn-lg skip_question" @if($skip >= 1) disabled @endif>Skip Question</button>
                 </div>
               </div>
             </div>
@@ -126,15 +126,16 @@
 
   <?php }?>
 
-
+   <?php if($skip < 2){ ?>
   let intervalID= setInterval(function()
   {
+    
         let skip_question='skip';
         markQuestion(skip_question)
   
   },"{{ $quiz->time_per_question * 1000 }}");
 
-
+<?php }?>
   function getQuestion(question_id)
   {
 
@@ -158,9 +159,9 @@
           
           $('#game_over_message').html('')
           $('#question_name').html(resp.message)
-
+       <?php if($skip < 2){ ?>
            clearInterval(intervalID)
-
+        <?php } ?>
         }else if(resp.quiz){
          
           let res=resp.quiz;
@@ -246,10 +247,13 @@
   
         if(res.skip >=1 )
         {
-         
-         clearInterval(intervalID)
-         $('.skip_question').prop('disabled',true)
-        getQuestion("<?php if($quiz !=null) echo $quiz->id ?>");
+         <?php if($skip < 2){ ?>
+          clearInterval(intervalID)
+
+        <?php } ?>
+          $('.skip_question').prop('disabled',true)
+          getQuestion("<?php if($quiz !=null) echo $quiz->id ?>");
+        
         }else{
           
           getQuestion("<?php if($quiz !=null) echo $quiz->id ?>");

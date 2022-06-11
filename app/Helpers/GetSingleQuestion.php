@@ -15,6 +15,7 @@ class GetSingleQuestion
         
         $answer=\DB::table('user_answers')
 		->where('quize_id',$quize_id)
+		->where('user_id',Auth::id())
 		->count();
 
 		$currents=\DB::table('user_answers')

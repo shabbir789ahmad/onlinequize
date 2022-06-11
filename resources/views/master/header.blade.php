@@ -15,7 +15,7 @@
 
         <li class="li"><a href="{{route('lifeline.index')}}" class="  {{ (request()->is('lifeline')) ? 'active' : '' }}">Earn Money</a></li>
         
-        <li class="li"><a href="{{route('lifeline.index')}}" class="  {{ (request()->is('lifeline')) ? 'active' : '' }}">Live Shows</a></li>
+        <li class="li"><a href="https://live.sahafi.tv/" class=" ">Live Shows</a></li>
       </ul>
 
       <!-- <button class="btn btn_upload_adds"><i class="fa-solid fa-plusd"></i>Post Adds</button> -->

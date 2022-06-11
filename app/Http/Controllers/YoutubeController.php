@@ -19,14 +19,14 @@ class YoutubeController extends Controller
 
     function index()
     {  
-         $results=YoutubeHelper::youtubeVideos('TheSahafiTV');
+         $results=YoutubeHelper::youtubeVideos();
 
         return view('Youtube_video',compact('results'));
     }
 
     function create()
     {
-       $results=YoutubeHelper::youtubeVideos('TheSahafiTV');
+       $results=YoutubeHelper::youtubeVideos();
         $lifeline=$this->lifeline->lifline();
        
        

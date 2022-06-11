@@ -45,7 +45,7 @@
 }
 
 #player{
-	pointer-events: none;
+	/*pointer-events: none;*/
 }
 
 .slider {

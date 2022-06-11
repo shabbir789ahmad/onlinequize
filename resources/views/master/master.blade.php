@@ -109,6 +109,36 @@
 }
 </script>
 
+<script type="text/javascript">
+  function createVideo(videoId)
+       {
+     
+         return new YT.Player('player', {
+
+            height: '100%',
+            width: '100%',
+            videoId: videoId,
+           
+            playerVars: 
+            {
+               'playsinline': 1,
+               'autoplay':1,
+               'mute':1,
+               // 'controls':0,
+               // 'disablekb':1,
+              
+            },
+           events: 
+           {
+           
+            'onReady': initialize,
+             
+           }
+        });
+       }
+
+</script>
+
 
   </body>
 </html>

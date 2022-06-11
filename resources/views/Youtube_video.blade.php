@@ -18,7 +18,7 @@
             <input type="range" id="progress-bar" value="0" class="slider">
          @foreach($results->items as $item)
          @if($loop->first)
-            <div id="player" data-id="{{$item->id->videoId}}"></div>
+            <div id="player" data-id="{{$item->snippet->resourceId->videoId}}"></div>
             <p ><span id="current-time"></span> <span id="duration" class="float-end"></span></p>
             
      @endif
@@ -31,10 +31,10 @@
               @foreach($results->items as $item)
               <script type="text/javascript">
                   
-                 videoIds[i++]="{{$item->id->videoId}}";
+                 videoIds[i++]="{{$item->snippet->resourceId->videoId}}";
                   
               </script>
-               <div class="row mt-3 more_videos" data-id="{{$item->id->videoId}}">
+               <div class="row mt-3 more_videos" data-id="{{$item->snippet->resourceId->videoId}}">
                 <div class="col-md-5">
                  <img src="{{$item->snippet->thumbnails->default->url}}" width="100%" height="110rem">
                 </div>
@@ -59,40 +59,19 @@
 
       
       let player;
-       let time_update_interval=0;
+       var time_update_interval;
       function onYouTubeIframeAPIReady()
        {
          let videoId='';
          id=document.getElementById('player')
          videoId=id.getAttribute('data-id');
+
+         // function implemented in master file
          player= createVideo(videoId)
 
        }
 
-      function createVideo(videoId)
-       {
      
-         return new YT.Player('player', {
-
-            height: '500',
-            width: '920',
-            videoId: videoId,
-          
-            playerVars: 
-            {
-               'playsinline': 1,
-               'autoplay':1,
-               mute:1,
-               disablekb:1,
-            },
-           events: 
-           {
-           
-            'onReady': initialize,
-      
-           }
-        });
-       }
 
      
       function initialize()
@@ -100,7 +79,7 @@
          updateTimerDisplay();
          updateProgressBar();
         
-        
+       
          clearInterval(time_update_interval);
          time_update_interval = setInterval(function ()
           {
@@ -167,10 +146,9 @@
 
       return minutes + ":" + seconds;
     }
-    
- </script>
 
-  <script type="text/javascript">
+
+
    var k=0;
     function credit()
     {
@@ -189,7 +167,7 @@
           clearInterval(time_update_interval)
           myFunction(res)
           allvideosId(k)
-
+          k++
        });
     }
   </script>

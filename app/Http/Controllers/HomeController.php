@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Quize;
 use App\Models\Question;
 use App\Helpers\LifeLineHelper;
+use App\Helpers\Progress;
+
 use Auth;
 use Http;
 class HomeController extends Controller
@@ -48,9 +50,9 @@ class HomeController extends Controller
             }else{
                 $quiz=null;
             }
-            
-         
-            return view('gameshow',compact('quiz','lifeline'));
+            $skip=Progress::skipQuestion($id);
+           
+            return view('gameshow',compact('quiz','lifeline','skip'));
            
         }else
         {

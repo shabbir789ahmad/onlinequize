@@ -1,3 +1,39 @@
+header{
+    height: 35rem;
+  }
+  header img{
+    position:  relative;
+    top: 0;
+    left: 0;
+
+  }
+  .contant{
+    position: absolute;
+    left: 18%;
+    right: 0;
+    top: 17%;
+    width: 40%;
+    height: 20rem;
+   
+    text-align: center;
+  }
+  .contant h2{
+    margin-top: 10%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 5vw;
+  }
+  .contant h3{
+   
+    color: #E86209;
+    font-weight: 700;
+    font-size: 3vw;
+  }
+   header{
+    background-color: #09192C;
+  }
+
+
 .label_font_size{
   font-size: 1.2vw;
 }
@@ -21,4 +57,22 @@
 }
 .user_image{
   border-radius: 50%;
+}
+
+.game_image{
+    height: 15rem;
+    width: 100%;
+  }
+@media (max-width: 900px)
+{
+  header{
+    height: 19rem;
+  }
+  .contant{
+    top: 25%;
+  }
+  .game_image{
+    height: 10rem;
+    width: 100%;
+  }
 }

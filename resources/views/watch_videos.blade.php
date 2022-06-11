@@ -14,6 +14,13 @@
    </div>
 </div>
    
+   <div class="steps">
+      <div class="step1">Video1</div>
+      <div class="step2">Video2</div>
+      <div class="step3">Video3</div>
+      <div class="step4">Video4</div>
+      <div class="step5">Video5</div>
+   </div>
 
 <div class="container-fluid">
     <div class="row ">
@@ -23,7 +30,7 @@
 
          @foreach($results->items as $item)
          @if($loop->first)
-            <div id="player" data-id="{{$item->id->videoId}}"></div>
+            <div id="player" data-id="{{$item->snippet->resourceId->videoId}}"></div>
             <p ><span id="current-time"></span> <span id="duration" class="float-end"></span></p>
            
      @endif
@@ -36,10 +43,10 @@
               @foreach($results->items as $item)
               <script type="text/javascript">
                   
-                 videoIds[i++]="{{$item->id->videoId}}";
+                 videoIds[i++]="{{$item->snippet->resourceId->videoId}}";
                   
               </script>
-               <div class="row mt-3 more_videos" data-id="{{$item->id->videoId}}">
+               <div class="row mt-3 more_videos" data-id="{{$item->snippet->resourceId->videoId}}">
                 <div class="col-md-5">
                  <img src="{{$item->snippet->thumbnails->default->url}}" width="100%" height="110rem">
                 </div>
@@ -70,37 +77,13 @@
          let videoId='';
          id=document.getElementById('player')
          videoId=id.getAttribute('data-id');
+
+         // function implemented in master file
          player= createVideo(videoId)
 
        }
-
-      function createVideo(videoId)
-       {
-     
-         return new YT.Player('player', {
-
-            height: '500',
-            width: '920',
-            videoId: videoId,
-           
-            playerVars: 
-            {
-               'playsinline': 1,
-               'autoplay':1,
-               'mute':1,
-               disablekb:1,
-            },
-           events: 
-           {
-           
-            'onReady': initialize,
-      
-           }
-        });
-       }
-
-     
-      function initialize()
+       
+     function initialize()
       {
          updateTimerDisplay();
          updateProgressBar();
@@ -133,8 +116,9 @@
      
         if(time >= (duration-1000))
         {
+
           
-              allvideosId(k++)
+              allvideosId(k)
               
             
         }
@@ -144,8 +128,9 @@
 
         if(time > 60000)
         {
-             // player.stopVideo();
-             allvideosId(k++)
+
+             
+             allvideosId(k)
            
         }
       }
@@ -179,33 +164,6 @@
     
  </script>
 
-  <script type="text/javascript">
-   
-    function credit()
-    {
-
-       $.ajax({
-       
-          url:'/lifeline/store',
-          type:'json',
-          method:'POST',
-          data:{
-
-             "_token": $('#csrf-token')[0].content ,
-          }
-       }).done(function(res)
-       {
-
-         clearInterval(time_update_interval)
-         myFunction(res.success);
-         let lifeline=res.lifeline;
-         alert(lifeline.lifeline)
-         document.getElementById('lifeline').html=lifeline.lifeline;
-         
-        
-       });
-    }
-  </script>
 
 
 @endsection
@@ -230,15 +188,66 @@
     function allvideosId(k)
     { 
         count++;
-
+         if(count==1)
+         {
+            $('.step1').css('background-color','#E86209')
+         }
+         if(count==2)
+         {
+            $('.step1').css('background-color','#E86209')
+            $('.step2').css('background-color','#E86209')
+         }
+         if(count==3)
+         {
+            $('.step1').css('background-color','#E86209')
+            $('.step2').css('background-color','#E86209')
+            $('.step3').css('background-color','#E86209')
+         }
+         if(count==4)
+         {
+            $('.step1').css('background-color','#E86209')
+            $('.step2').css('background-color','#E86209')
+            $('.step3').css('background-color','#E86209')
+            $('.step4').css('background-color','#E86209')
+         }
         if(count===5)
         {
+            $('.step1').css('background-color','#E86209')
+            $('.step2').css('background-color','#E86209')
+            $('.step3').css('background-color','#E86209')
+            $('.step4').css('background-color','#E86209')
+            $('.step5').css('background-color','#E86209')
            credit(); 
         }
         
         player.loadVideoById(videoIds[k])
         initialize()
       
+    }
+
+    function credit()
+    {
+
+       $.ajax({
+       
+          url:'/lifeline/store',
+          type:'json',
+          method:'POST',
+          data:{
+
+             "_token": $('#csrf-token')[0].content ,
+          }
+       }).done(function(res)
+       {
+
+         clearInterval(time_update_interval)
+         myFunction(res.success);
+         let lifeline=res.lifeline;
+         
+         document.getElementById('lifeline').html=lifeline.lifeline;
+         
+        
+       });
     }
 
   </script>
